@@ -8,7 +8,6 @@ class ToScrapeCSSSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        response.css("div.user-agent")
         yield {
-                'useragent': quote.css("span.text::text").extract_first(),
+                'useragent': response.css("div.user-agent::text").extract_first(),
                 }
