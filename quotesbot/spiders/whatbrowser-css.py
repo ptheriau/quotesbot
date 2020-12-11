@@ -8,7 +8,7 @@ class ToScrapeCSSSpider(scrapy.Spider):
     ]
         
     def parse(self, response):
-        for row in response.css("div.browser-details-table"):
+        for row in response.css("div.row"):
             yield {
                 'name': row.css("div.name::text").extract_first(),
                 'value': row.css("div.value::text").extract_first(),
