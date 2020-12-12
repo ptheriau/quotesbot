@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 import scrapy
 
-
-class GrocerySpider(scrapy.Spider):
-    name = "iga"
-    allowed_domains = ["iga.net"]
+class ToScrapeCSSSpider(scrapy.Spider):
+    name = "whatbrowser-css"
     start_urls = [
-        'https://www.iga.net/fr/epicerie_en_ligne/sushis',
+        'https://www.whatsmybrowser.org/',
     ]
-
+        
     def parse(self, response):
-        item = {}
-        product = response.css("div.item-product")
-        item["name"] = product.css("a.js-ga-productname::text").extract_first()
-        item['brand'] = product.css("a.item-product__brand push--top::text").extract_first()
-        item['size'] = product.css("div.item-product__info::text").extract_first()
-        item['price'] = product.css('div.item-product__price push--bottom::text').extract_first()
-        yield item
+        for row in response.css("div.row"):
+            yield {
+                'name': row.css("div.name::text").extract_first(),
+                'value': row.css("div.value::text").extract_first(),
+            }
+
+        yield {
+                'useragent': response.css("div.user-agent::text").extract_first(),
+                }
