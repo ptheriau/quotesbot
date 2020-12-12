@@ -17,3 +17,7 @@ class IGA_Spider(scrapy.Spider):
                 'size': product.css("div.item-product__info::text").extract_first().strip(),
                 'price': product.css("span.price::text").extract_first().strip(),
             }
+            nextpagelinkselector=response.css(".icon--arrow-skinny-right:attr(href)")
+            if nextpagelinkselector:
+                nextpagelink=nextpagelinkselector[0].extract()
+                yield scrapy.Request(url=response.urljoin(nextPageLink))
