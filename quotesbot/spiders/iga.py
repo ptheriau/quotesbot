@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
 
-class ToScrapeCSSSpider(scrapy.Spider):
-    name = "whatbrowser-css"
+class IGA_Spider(scrapy.Spider):
+    name = "IGA-spider"
     start_urls = [
         'https://www.whatsmybrowser.org/',
     ]
