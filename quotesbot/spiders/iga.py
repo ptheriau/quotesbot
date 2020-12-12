@@ -9,7 +9,7 @@ class GrocerySpider(scrapy.Spider):
         'https://www.iga.net/fr/epicerie_en_ligne/sushis',
     ]
 
-    def parse_grocery_page(self, response):
+    def parse(self, response):
         item = {}
         product = response.css("div.item-product")
         item["name"] = product.css("a.js-ga-productname::text").extract_first()
