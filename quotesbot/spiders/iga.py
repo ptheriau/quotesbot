@@ -20,4 +20,4 @@ class IGA_Spider(scrapy.Spider):
             nextpagelinkselector=response.css(".icon--arrow-skinny-right::attr(href)")
             if nextpagelinkselector:
                 nextpagelink=nextpagelinkselector[0].extract()
-                yield scrapy.Request(url=response.urljoin(nextPageLink))
+                yield scrapy.Request(url=response.urljoin(nextpagelink))
