@@ -9,8 +9,9 @@ class IGA_Spider(scrapy.Spider):
     ]
         
     def parse(self, response):
-        for product in response.css("div.item-product"):
+        for product in response.css("div.item-product__content"):
             yield {
-                'name': product.css("a.js-ga-productname::text").extract_first(),
                 'brand': product.css("a.item-product__brand::text").extract_first(),
+                'name': product.css("a.js-ga-productname::text").extract_first(),
+                'link': product.css("a.js-ga-productname::href").extract_first(),
             }
