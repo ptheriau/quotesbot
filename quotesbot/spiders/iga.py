@@ -14,4 +14,5 @@ class IGA_Spider(scrapy.Spider):
                 'brand': product.css("a.item-product__brand::text").extract_first(),
                 'name': product.css("a.js-ga-productname::text").extract_first(),
                 'link': product.css('a.js-ga-productname::attr("href")'.extract_first(),
+                'size': product.css("item-product__info::text").extract_first(),
             }
