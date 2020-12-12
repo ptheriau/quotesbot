@@ -16,6 +16,7 @@ class IGA_Spider(scrapy.Spider):
                 'link': product.css("a.js-ga-productname::attr(href)").extract_first(),
                 'size': product.css("div.item-product__info::text").extract_first().strip(),
                 'price': product.css("span.price::text").extract_first().strip(),
+                'regprice': product.css("span.price-amount::text").extract_first().strip(),
             }
             nextpagelinkselector=response.css(".icon--arrow-skinny-right::attr(href)")
             if nextpagelinkselector:
