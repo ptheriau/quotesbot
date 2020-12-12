@@ -17,7 +17,7 @@ class IGA_Spider(scrapy.Spider):
             if regpriceselector:
                 tempregprice=regpriceselector.extract_first().strip()
                 tempsaleprice=priceselector.extract_first().strip()
-            else
+            else:
                 tempregprice=priceselector.extract_first().strip()
                 tempsaleprice=""
             
