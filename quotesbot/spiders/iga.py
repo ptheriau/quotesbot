@@ -11,19 +11,24 @@ class IGA_Spider(scrapy.Spider):
         
     def parse(self, response):
         for product in response.css("div.item-product__content"):
+            
+            priceselector=product.css("span.price::text")
+            regpriceselector=product.css("span.price-amount::text")
+            if regpriceselector:
+                tempregprice=regpriceselector.extract_first().strip()
+                tempsaleprice=priceselector.extract_first().strip()
+            else
+                tempregprice=priceselector.extract_first().strip()
+                tempsaleprice=""
+            
             yield {
                 'brand': product.css("div.item-product__brand::text").extract_first().strip(),
                 'name': product.css("a.js-ga-productname::text").extract_first().strip(),
                 'link': product.css("a.js-ga-productname::attr(href)").extract_first(),
                 'size': product.css("div.item-product__info::text").extract_first().strip(),
                 #'price': product.css("span.price::text").extract_first().strip(),
-                priceselector=product.css("span.price::text")
-                regpriceselector=product.css("span.price-amount::text")
-                if regpriceselector:
-                    'regprice': regpriceselector.extract_first().strip(),
-                    'saleprice': priceselector.extract_first().strip(),
-                else
-                    'regprice': priceselector.extract_first().strip(),
+                'regprice': tempregprice,
+                'saleprice': tempsaleprice,
             }
             nextpagelinkselector=response.css(".icon--arrow-skinny-right::attr(href)")
             if nextpagelinkselector:
