@@ -23,7 +23,7 @@ class IGA_Spider(scrapy.Spider):
                 
             promotionselector=product.css("span.js-ga-promotion::text")
             if promotionselector:
-                tempromotion=promotionselector.extract_first().strip()
+                temppromotion=promotionselector.extract_first().strip()
             else:
                 temppromotion=""
             
