@@ -14,8 +14,6 @@ class ToScrapeCSSSpider(scrapy.Spider):
                 'value': row.css("div.value::text").extract_first(),
             }
 
-            
-    def parse(self, response):
         yield {
                 'useragent': response.css("div.user-agent::text").extract_first(),
                 }
