@@ -20,6 +20,12 @@ class IGA_Spider(scrapy.Spider):
             else:
                 tempregprice=priceselector.extract_first().strip()
                 tempsaleprice=""
+                
+            promotionselector=product.css("span.js-ga-promotion::text")
+            if promotionselector:
+                tempromotion=promotionselector.extract_first().strip()
+            else:
+                temppromotion=""
             
             yield {
                 'brand': product.css("div.item-product__brand::text").extract_first().strip(),
@@ -29,6 +35,7 @@ class IGA_Spider(scrapy.Spider):
                 #'price': product.css("span.price::text").extract_first().strip(),
                 'regprice': tempregprice,
                 'saleprice': tempsaleprice,
+                'promotion': temppromotion,
             }
             nextpagelinkselector=response.css(".icon--arrow-skinny-right::attr(href)")
             if nextpagelinkselector:
