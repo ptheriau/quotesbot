@@ -21,7 +21,7 @@ class IGA_Spider(scrapy.Spider):
             
             brandselector=product.css("span.pt-brand::text")
             if brandselector:
-                tempbrand=brandselector..extract_first().strip()
+                tempbrand=brandselector.extract_first().strip()
             else:
                 tempbrand=""
             
