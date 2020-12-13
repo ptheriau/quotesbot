@@ -11,12 +11,13 @@ class Metro_Spider(scrapy.Spider):
     def parse(self, response):
         for product in response.css("div.products-tile-list__tile"):
             
+            regprice=""
+            saleprice=""
             promoselector=product.css("div.pi-price-promo")
             if promoselector:
-                tempsaleprice=product.css("div.pi-sale-price .pi-price::text").extract().strip()
+                saleprice=product.css("div.pi-sale-price .pi-price::text").extract().strip()
                 regprice=product.css("div.pi-regular-price .pi-price::text").extract_first().strip()
             else:
-                tempsaleprice=""
                 for temp in product.css("span.pi-price *::text").extract():
                     regprice+=str(temp).strip()
             
@@ -46,7 +47,7 @@ class Metro_Spider(scrapy.Spider):
                 'link': product.css("a.product-details-link::attr(href)").extract_first(),
                 'size': tempsize,
                 'regprice': regprice,
-                'saleprice': tempsaleprice,
+                'saleprice': saleprice,
                 'estimatedweight': estimatedweight,
             }
             #nextpagelinkselector=response.css(".icon--arrow-skinny-right::attr(href)")
