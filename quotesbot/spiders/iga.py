@@ -31,9 +31,14 @@ class IGA_Spider(scrapy.Spider):
                 temppromotion=promotionselector.extract_first().strip()
             else:
                 temppromotion=""
+                
+            brand=""
+            brandselector=product.css("div.item-product__brand::text")
+            if brandselector:
+                brand=brandselector.extract_first().strip()
             
             yield {
-                'brand': product.css("div.item-product__brand::text").extract_first().strip(),
+                'brand': brand,
                 'name': product.css("a.js-ga-productname::text").extract_first().strip(),
                 'link': product.css("a.js-ga-productname::attr(href)").extract_first(),
                 'size': product.css("div.item-product__info::text").extract_first().strip(),
