@@ -34,8 +34,9 @@ class Metro_Spider(scrapy.Spider):
             estimatedweight=""
             estimatedweightselector=product.css("span.unit-update *::text")
             if estimatedweightselector:
-                estimatedweight=estimatedweightselector.extract_first().strip()
-            
+                estimatedweightselector=estimatedweightselector.extract.strip()
+                for temp in estimatedweightselector
+                    estimatedweight=temp
             
             yield {
                 'brand': tempbrand,
