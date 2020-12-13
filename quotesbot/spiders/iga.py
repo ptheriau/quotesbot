@@ -6,7 +6,8 @@ class IGA_Spider(scrapy.Spider):
     allowed_domains = ["iga.net"]
     start_urls = [
         #'https://www.iga.net/fr/epicerie_en_ligne/sushis',
-        'https://www.iga.net/fr/epicerie_en_ligne/boulangerie_industrielle',
+        #'https://www.iga.net/fr/epicerie_en_ligne/boulangerie_industrielle',
+        'https://www.iga.net/fr/epicerie_en_ligne/parcourir',
     ]
         
     def parse(self, response):
