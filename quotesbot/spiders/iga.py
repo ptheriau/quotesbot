@@ -12,7 +12,8 @@ class IGA_Spider(scrapy.Spider):
     def parse(self, response):
         #2020-12-12 Must go up the chain to grap promotions
         #for product in response.css("div.item-product__content"):
-        for product in response.css("div.item-product"):
+        #for product in response.css("div.item-product"):
+        for product in response.css("div.grid"):
             
             priceselector=product.css("span.price::text")
             regpriceselector=product.css("span.price-amount::text")
