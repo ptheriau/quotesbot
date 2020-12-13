@@ -37,7 +37,7 @@ class Metro_Spider(scrapy.Spider):
                 #estimatedweightselector=estimatedweightselector.extract.strip()
                 #for temp in estimatedweightselector
                 for temp in product.css("span.unit-update::text").extract():
-                    estimatedweight+=temp
+                    estimatedweight+=str(temp)
             
             yield {
                 'brand': tempbrand,
