@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 
-class IGA_Spider(scrapy.Spider):
+class Metro_Spider(scrapy.Spider):
     name = "Metro-spider"
     allowed_domains = ["metro.ca"]
     start_urls = [
@@ -34,7 +34,7 @@ class IGA_Spider(scrapy.Spider):
             estimatedweight=""
             estimatedweightselector=product.css("span.unit-update::text")
             if estimatedweightselector:
-                estimatedweight=estimatedweightselector.extract().strip()
+                estimatedweight=estimatedweightselector.extract_first().strip()
             
             
             yield {
