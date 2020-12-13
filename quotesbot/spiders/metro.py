@@ -14,10 +14,11 @@ class Metro_Spider(scrapy.Spider):
             promoselector=product.css("div.pi-price-promo")
             if promoselector:
                 tempsaleprice=product.css("div.pi-sale-price .pi-price::text").extract().strip()
-                tempregprice=product.css("div.pi-regular-price .pi-price::text").extract_first().strip()
+                regprice=product.css("div.pi-regular-price .pi-price::text").extract_first().strip()
             else:
                 tempsaleprice=""
-                tempregprice=product.css("span.pi-price::text").extract_first().strip()
+                for temp in product.css("span.pi-price *::text").extract().strip():
+                    regprice+=str(temp)
             
             brandselector=product.css("span.pt-brand::text")
             if brandselector:
@@ -44,7 +45,7 @@ class Metro_Spider(scrapy.Spider):
                 'name': product.css("div.pt-title::text").extract_first().strip(),
                 'link': product.css("a.product-details-link::attr(href)").extract_first(),
                 'size': tempsize,
-                'regprice': tempregprice,
+                'regprice': regprice,
                 'saleprice': tempsaleprice,
                 'estimatedweight': estimatedweight,
             }
