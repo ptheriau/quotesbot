@@ -5,7 +5,7 @@ class IGA_Spider(scrapy.Spider):
     name = "Metro-spider"
     allowed_domains = ["metro.ca"]
     start_urls = [
-        'https://www.metro.ca/en/online-grocery/search',
+        'https://www.metro.ca/epicerie-en-ligne/recherche',
     ]
         
     def parse(self, response):
@@ -29,7 +29,13 @@ class IGA_Spider(scrapy.Spider):
             if sizeselector:
                 tempsize=sizeselector.extract_first().strip(),
             else:
-                tempsize=""                    
+                tempsize=""
+            
+            estimatedweight=""
+            estimatedweightselector=product.css("span.unit-update::text")
+            if estimatedweightselector:
+                estimatedweight=estimatedweightselector.extract().strip()
+            
             
             yield {
                 'brand': tempbrand,
@@ -38,6 +44,7 @@ class IGA_Spider(scrapy.Spider):
                 'size': tempsize,
                 'regprice': tempregprice,
                 'saleprice': tempsaleprice,
+                'estimatedweight': estimatedweight,
             }
             #nextpagelinkselector=response.css(".icon--arrow-skinny-right::attr(href)")
             #if nextpagelinkselector:
