@@ -35,7 +35,7 @@ class IGA_Spider(scrapy.Spider):
                 'brand': tempbrand,
                 'name': product.css("div.pt-title::text").extract_first().strip(),
                 'link': product.css("a.product-details-link::attr(href)").extract_first(),
-                'size': tempsize;
+                'size': tempsize,
                 'regprice': tempregprice,
                 'saleprice': tempsaleprice,
             }
