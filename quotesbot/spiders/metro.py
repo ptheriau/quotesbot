@@ -24,12 +24,18 @@ class IGA_Spider(scrapy.Spider):
                 tempbrand=brandselector.extract_first().strip()
             else:
                 tempbrand=""
+                
+            sizeselector=product.css("span.pt-weight::text")
+            if sizeselector:
+                tempsize=sizeselector.extract_first().strip(),
+            else:
+                tempsize=""                    
             
             yield {
                 'brand': tempbrand,
                 'name': product.css("div.pt-title::text").extract_first().strip(),
                 'link': product.css("a.product-details-link::attr(href)").extract_first(),
-                'size': product.css("span.pt-weight::text").extract_first().strip(),
+                'size': tempsize;
                 'regprice': tempregprice,
                 'saleprice': tempsaleprice,
             }
