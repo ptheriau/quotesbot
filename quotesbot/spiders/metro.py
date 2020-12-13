@@ -11,9 +11,9 @@ class IGA_Spider(scrapy.Spider):
     def parse(self, response):
         for product in response.css("div.products-tile-list__tile"):
             
-            promoselector=product.css("div.pi-price-promo::text")
+            promoselector=product.css("div.pi-price-promo")
             if promoselector:
-                tempsaleprice=product.css("div.pi-sale-price .pi-price::text").extract_first().strip()
+                tempsaleprice=product.css("div.pi-sale-price .pi-price::text").extract().strip()
                 tempregprice=product.css("div.pi-regular-price .pi-price::text").extract_first().strip()
             else:
                 tempsaleprice=""
