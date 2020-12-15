@@ -31,7 +31,7 @@ class Metro_Spider(scrapy.Spider):
             if sizeselector:
                 tempsize=sizeselector.extract_first().strip(),
             else:
-                tempsize=""
+                tempsize="none"
             
             estimatedweight=""
             estimatedweightselector=product.css("span.unit-update::text")
