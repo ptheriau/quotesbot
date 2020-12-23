@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
+from random import randint
+from time import sleep
+
 
 class IGA_Spider(scrapy.Spider):
     name = "IGA-spider"
@@ -50,4 +53,5 @@ class IGA_Spider(scrapy.Spider):
             nextpagelinkselector=response.css(".icon--arrow-skinny-right::attr(href)")
             if nextpagelinkselector:
                 nextpagelink=nextpagelinkselector[0].extract()
+                sleep(randint(2,7))
                 yield scrapy.Request(url=response.urljoin(nextpagelink))
