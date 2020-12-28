@@ -35,9 +35,9 @@ class Metro_Spider(scrapy.Spider):
                         tempstring=re.sub('[^\d\.]', '', tempstring)
                         regpriceperlb=str(round(float(tempstring)/2.2046, 2))
                         
+            regpriceunit=""
+            salepriceunit=""
             if regpriceperlb=="" and salepriceperlb=="":
-                regpriceunit=""
-                salepriceunit=""
                 promoselector=product.css("div.pi-price-promo")
                 if promoselector:
                     salepriceunit=product.css("div.pi-sale-price .pi-price::text").extract().strip()
