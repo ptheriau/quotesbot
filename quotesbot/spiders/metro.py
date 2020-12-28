@@ -9,6 +9,11 @@ class Metro_Spider(scrapy.Spider):
         'https://www.metro.ca/epicerie-en-ligne/recherche',
     ]
         
+    frmdata = {"userConfirmation": "false", "lang": 'fr'}
+    url = "https://www.metro.ca/stores/setmystore/64"
+    yield FormRequest(url, callback=self.parse, formdata=frmdata)
+        
+        
     def parse(self, response):
         for product in response.css("div.products-tile-list__tile"):
                                
