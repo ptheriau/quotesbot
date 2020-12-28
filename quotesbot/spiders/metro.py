@@ -10,7 +10,7 @@ class Metro_Spider(scrapy.Spider):
         'https://www.metro.ca/epicerie-en-ligne/recherche',
     ]
     
-    def start_requests(self):
+    def parse(self,response):
         #return[FormRequest("https://www.metro.ca/stores/setmystore/64",
         #               formdata = '''{"userConfirmation":"false",
         #                                       "lang":"fr"}}''',
@@ -24,14 +24,14 @@ class Metro_Spider(scrapy.Spider):
     #def set_store(self, response):
         frmdata = {"userConfirmation": "false", "lang": 'fr'}
         url = "https://www.metro.ca/stores/setmystore/64"
-        yield FormRequest(url, callback=self.parse, formdata=frmdata)
+        yield FormRequest(url, callback=self.start_scraping, formdata=frmdata)
         #data = {
         #'userConfirmation': 'false',
         #'lang': 'fr',
         #}
         #yield JsonRequest(url='https://www.metro.ca/stores/setmystore/64', data=data)
         
-    def parse(self, response):
+    def start_scraping(self, response):
         for product in response.css("div.products-tile-list__tile"):
                                
             regpriceperlb=""
