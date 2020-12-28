@@ -20,6 +20,12 @@ class Metro_Spider(scrapy.Spider):
             else:
                 for temp in product.css("span.pi-price *::text").extract():
                     regpriceunit+=str(temp).strip()
+                    
+            regpriceperlb=""
+            salepriceperlb=""
+            secondarypriceselector=product.css("div.pi-secondary-price")
+            if secondarypriceselector
+                regpriceperlb=secondarypriceselector.extract_first().strip()
             
             brandselector=product.css("span.pt-brand::text")
             if brandselector:
