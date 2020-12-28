@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
+from scrapy.http import FormRequest
 import re
 
 class Metro_Spider(scrapy.Spider):
