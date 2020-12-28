@@ -15,13 +15,9 @@ class Metro_Spider(scrapy.Spider):
         #               formdata = '''{"userConfirmation":"false",
         #                                       "lang":"fr"}}''',
         #               callback=self.parse)]
-        frq = scrapy.FormRequest("https://www.mygofer.com/lps-mygofer/api/v1/mygofer/search",
-...     method="POST",
-...     body='''{"userConfirmation":"false",
-...            "lang":"fr"}}''',
-...     headers={"Content-Type": "application/json;charset=UTF-8",
-...     "Accept":"application/json, text/plain, */*"})
->>>     fetch(frq)
+        return [FormRequest(url="https://www.metro.ca/stores/setmystore/64",
+                    formdata={'userConfirmation': 'false', 'lang': 'fr'},
+                    callback=self.after_post)]
 
     #handle_httpstatus_list = [415]
     
