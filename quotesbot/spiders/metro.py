@@ -35,14 +35,14 @@ class Metro_Spider(scrapy.Spider):
             regularpriceselector=product.css("div.pi-regular-price")
             if regularpriceselector:
                 salepriceperlb=regpriceperlb
-                regpriceperlb=str("")
+                regpriceperlb=""
                 previous=""
                 for temp in product.css("div.pi-regular-price *::text").extract():
                     regpriceperlb+=str(temp)
                     if "kg" in regpriceperlb:
                         regpriceperlb=regpriceperlb.replace(',', '.')
                         regpriceperlb=re.sub('[^\d\.]', '', regpriceperlb)
-                        regpriceperlb=round(float(regpriceperlb)/2.2046, 2)
+                        regpriceperlb=str(round(float(regpriceperlb)/2.2046, 2))
             
             brandselector=product.css("span.pt-brand::text")
             if brandselector:
