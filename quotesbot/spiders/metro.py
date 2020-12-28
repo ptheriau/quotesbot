@@ -11,17 +11,7 @@ class Metro_Spider(scrapy.Spider):
         
     def parse(self, response):
         for product in response.css("div.products-tile-list__tile"):
-            
-            regpriceunit=""
-            salepriceunit=""
-            promoselector=product.css("div.pi-price-promo")
-            if promoselector:
-                salepriceunit=product.css("div.pi-sale-price .pi-price::text").extract().strip()
-                regpriceunit=product.css("div.pi-regular-price .pi-price::text").extract_first().strip()
-            else:
-                for temp in product.css("span.pi-price *::text").extract():
-                    regpriceunit+=str(temp).strip()
-                    
+                               
             regpriceperlb=""
             salepriceperlb=""
             secondarypriceselector=product.css("div.pi-secondary-price")
@@ -36,13 +26,25 @@ class Metro_Spider(scrapy.Spider):
             if regularpriceselector:
                 salepriceperlb=regpriceperlb
                 regpriceperlb=""
+                tempstring=""
                 previous=""
                 for temp in product.css("div.pi-regular-price *::text").extract():
-                    regpriceperlb+=str(temp)
-                    if "kg" in regpriceperlb:
-                        regpriceperlb=regpriceperlb.replace(',', '.')
-                        regpriceperlb=re.sub('[^\d\.]', '', regpriceperlb)
-                        regpriceperlb=str(round(float(regpriceperlb)/2.2046, 2))
+                    tempstring+=str(temp)
+                    if "kg" in tempstring:
+                        tempstring=tempstring.replace(',', '.')
+                        tempstring=re.sub('[^\d\.]', '', tempstring)
+                        regpriceperlb=str(round(float(tempstring)/2.2046, 2))
+                        
+            if regpriceperlb=="" and salepriceperlb=="":
+                regpriceunit=""
+                salepriceunit=""
+                promoselector=product.css("div.pi-price-promo")
+                if promoselector:
+                    salepriceunit=product.css("div.pi-sale-price .pi-price::text").extract().strip()
+                    regpriceunit=product.css("div.pi-regular-price .pi-price::text").extract_first().strip()
+                else:
+                    for temp in product.css("span.pi-price *::text").extract():
+                        regpriceunit+=str(temp).strip()
             
             brandselector=product.css("span.pt-brand::text")
             if brandselector:
