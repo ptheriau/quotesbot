@@ -24,7 +24,7 @@ class Metro_Spider(scrapy.Spider):
             regpriceperlb=""
             salepriceperlb=""
             secondarypriceselector=product.css("div.pi-secondary-price")
-            if secondarypriceselector
+            if secondarypriceselector:
                 regpriceperlb=secondarypriceselector.extract_first().strip()
             
             brandselector=product.css("span.pt-brand::text")
