@@ -22,14 +22,14 @@ class Metro_Spider(scrapy.Spider):
     #handle_httpstatus_list = [415]
     
     #def set_store(self, response):
-    #    frmdata = {"userConfirmation": "false", "lang": 'fr'}
-    #    url = "https://www.metro.ca/stores/setmystore/64"
-    #    yield FormRequest(url, callback=self.parse, formdata=frmdata)
-        data = {
-        'userConfirmation': 'false',
-        'lang': 'fr',
-        }
-        yield JsonRequest(url='https://www.metro.ca/stores/setmystore/64', data=data)
+        frmdata = {"userConfirmation": "false", "lang": 'fr'}
+        url = "https://www.metro.ca/stores/setmystore/64"
+        yield FormRequest(url, callback=self.parse, formdata=frmdata)
+        #data = {
+        #'userConfirmation': 'false',
+        #'lang': 'fr',
+        #}
+        #yield JsonRequest(url='https://www.metro.ca/stores/setmystore/64', data=data)
         
     def parse(self, response):
         for product in response.css("div.products-tile-list__tile"):
