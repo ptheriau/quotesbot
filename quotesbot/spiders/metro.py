@@ -35,7 +35,7 @@ class Metro_Spider(scrapy.Spider):
             regularpriceselector=product.css("div.pi-regular-price")
             if regularpriceselector:
                 salepriceperlb=regpriceperlb
-                regpriceperlb=""
+                regpriceperlb=str("")
                 previous=""
                 for temp in product.css("div.pi-regular-price *::text").extract():
                     regpriceperlb+=str(temp)
