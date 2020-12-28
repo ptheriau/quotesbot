@@ -41,7 +41,7 @@ class Metro_Spider(scrapy.Spider):
                     regpriceperlb+=str(temp)
                     if "kg" in regpriceperlb:
                         regpriceperlb=regpriceperlb.replace(',', '.')
-                        regpriceperlb=re.sub('[^\d\.]', '', previous)
+                        regpriceperlb=re.sub('[^\d\.]', '', regpriceperlb)
                         regpriceperlb=round(float(regpriceperlb)/2.2046, 2)
             
             brandselector=product.css("span.pt-brand::text")
