@@ -39,7 +39,7 @@ class Metro_Spider(scrapy.Spider):
                 previous=""
                 for temp in product.css("div.pi-regular-price *::text").extract():
                     regpriceperlb+=str(temp)
-                    if "/ kg" in regpriceperlb:
+                    if "kg" in regpriceperlb:
                         regpriceperlb=regpriceperlb.replace(',', '.')
                         regpriceperlb=re.sub('[^\d\.]', '', previous)
                         regpriceperlb=round(repriceperlb/2.2046, 2)
