@@ -28,7 +28,8 @@ class Metro_Spider(scrapy.Spider):
                 previous=""
                 for temp in product.css("div.pi-secondary-price *::text").extract():
                     if temp=="lb":
-                        regpriceperlb=str(previous)+str(temp)
+                        previous=previous.replace(',', '.')
+                        regpriceperlb=re.sub('[^0-9]', '', previous)
                     previous=temp
             regularpriceselector=product.css("div.pi-regular-price")
             if regularpriceselector:
