@@ -11,15 +11,15 @@ class Metro_Spider(scrapy.Spider):
     def parse(self, response):
         for product in response.css("div.products-tile-list__tile"):
             
-            regprice=""
-            saleprice=""
+            regpriceunit=""
+            salepriceunit=""
             promoselector=product.css("div.pi-price-promo")
             if promoselector:
-                saleprice=product.css("div.pi-sale-price .pi-price::text").extract().strip()
-                regprice=product.css("div.pi-regular-price .pi-price::text").extract_first().strip()
+                salepriceunit=product.css("div.pi-sale-price .pi-price::text").extract().strip()
+                regpriceunit=product.css("div.pi-regular-price .pi-price::text").extract_first().strip()
             else:
                 for temp in product.css("span.pi-price *::text").extract():
-                    regprice+=str(temp).strip()
+                    regpriceunit+=str(temp).strip()
             
             brandselector=product.css("span.pt-brand::text")
             if brandselector:
@@ -46,8 +46,10 @@ class Metro_Spider(scrapy.Spider):
                 'name': product.css("div.pt-title::text").extract_first().strip(),
                 'link': product.css("a.product-details-link::attr(href)").extract_first(),
                 'size': tempsize,
-                'regprice': regprice,
-                'saleprice': saleprice,
+                'regpriceunit': regpriceunit,
+                'salepriceunit': salepriceunit,
+                'regpriceperlb': regpriceperlb,
+                'salepriceperlb': salepriceperlb,
                 'estimatedweight': estimatedweight,
             }
             #nextpagelinkselector=response.css(".icon--arrow-skinny-right::attr(href)")
