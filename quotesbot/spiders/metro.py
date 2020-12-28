@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
+import re
 
 class Metro_Spider(scrapy.Spider):
     name = "Metro-spider"
