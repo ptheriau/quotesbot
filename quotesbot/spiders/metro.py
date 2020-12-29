@@ -20,16 +20,16 @@ class Metro_Spider(scrapy.Spider):
         
         #yield FormRequest(url="https://www.metro.ca/stores/setmystore/64", method="POST", formdata={'userConfirmation':'false','lang':'fr'})
         #scrapy.Request(url="https://www.metro.ca/epicerie-en-ligne/recherche", callback=self.start_scraping)
-        logging.DEBUG('testing')
+        logging.debug('testing')
         pass
     
     def init_request(self):
-        logging.DEBUG('init_request')
+        logging.debug('init_request')
         return Request(url=self.login_page, callback=self.login)
         
     def login(self, response):
-        logging.DEBUG('logging in...')
-        logging.DEBUG(response)
+        logging.debug('logging in...')
+        logging.debug(response)
         return scrapy.FormRequest.form_response(
                                          response,
                                          formdata={'userConfirmation':'false','lang':'fr'},
@@ -37,17 +37,17 @@ class Metro_Spider(scrapy.Spider):
                                         )
 
     def check_login_response(self, response):
-        logging.DEBUG('check_login_response')
+        logging.debug('check_login_response')
         if "<li class=\"logout\">" in response.body:
-            logging.DEBUG('signed in correctly')
+            logging.debug('signed in correctly')
             self.initialized()
         else:
-            logging.DEBUG('still not signed in...')
+            logging.debug('still not signed in...')
 
     def parse_item(self, response):
       console.log('parse_item')
       i['url'] = response.url
-      logging.DEBUG('response.url:' + response.url)
+      logging.debug('response.url:' + response.url)
       return i
     
     
