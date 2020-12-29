@@ -49,9 +49,9 @@ class Metro_Spider(scrapy.Spider):
             salepriceunit=''
             regpriceunit=''
             if regpriceperlb=="" and salepriceperlb=="":
-                specialselector=product.css("div.pi-sale-price .price-promo")
+                specialselector=product.css("div.pi-sale-price .pi-price-promo")
                 if specialselector:
-                    salepriceunit=product.css("div.pi-sale-price .price-promo::text").extract_first().strip()
+                    salepriceunit=product.css("div.pi-sale-price .pi-price-promo::text").extract_first().strip()
                     regpriceunit=product.css("div.pi-regular-price .pi-price::text").extract_first().strip()
                 else:
                     #regpriceunit=product.css("div.pi-sale-price .pi-price::text").extract_first().strip()
