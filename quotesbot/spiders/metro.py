@@ -16,11 +16,11 @@ class Metro_Spider(scrapy.Spider):
         yield scrapy.FormRequest(url="https://www.metro.ca/stores/setmystore/64", method="POST", formdata={'userConfirmation':'false','lang':'fr'}, callback=self.store_set)
         
     def store_set(self, response):
-        logging.info("test12")
-        logging.info(response)
+        logging.debug(response)
         yield scrapy.Request(url="https://www.metro.ca/epicerie-en-ligne/recherche", callback=self.start_scraping)
         
     def start_scraping(self, response):
+        logging.debug(response)
         for product in response.css("div.products-tile-list__tile"):
                                
             regpriceperlb=""
