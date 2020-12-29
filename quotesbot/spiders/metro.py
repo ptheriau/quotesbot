@@ -49,18 +49,22 @@ class Metro_Spider(scrapy.Spider):
             salepriceunit=''
             regpriceunit=''
             if regpriceperlb=="" and salepriceperlb=="":
+                currentprice=product.css("div.pi--main-price::attr(data-main-price)").extract_first().strip()
                 regpriceselector=product.css("div.pi-regular-price")
                 multiprice=''
                 for temp in product.css("div.pi-secondary-price *::text").extract():
                     multiprice+=str(temp)
                 if regpriceselector or 'ou' in multiprice:
                     #en special
-                    salepriceunit=product.css("div.pi--main-price::attr(data-main-price)").extract_first().strip()
-                    for temp in product.css("div.pi-regular-price *::text").extract():
-                        regpriceunit+=str(temp)       
+                    salepriceunit=currentprice
+                    if 'ou' in multiprice:
+                        regpriceunit=multiprice
+                    else:
+                        for temp in product.css("div.pi-regular-price *::text").extract():
+                            regpriceunit+=str(temp)       
                 else:
                     #prixreg
-                    regpriceunit=product.css("div.pi--main-price::attr(data-main-price)").extract_first().strip()
+                    regpriceunit=currentprice
                     salepriceunit=''
             
             brandselector=product.css("span.pt-brand::text")
