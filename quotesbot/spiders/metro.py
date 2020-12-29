@@ -23,8 +23,8 @@ class Metro_Spider(scrapy.Spider):
         pass
     
     def init_request(self):
-    self.log('init_request')
-    return Request(url=self.login_page, callback=self.login)
+        self.log('init_request')
+        return Request(url=self.login_page, callback=self.login)
         
     def login(self, response):
         self.log('logging in...')
