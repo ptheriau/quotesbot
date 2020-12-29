@@ -7,29 +7,26 @@ class Metro_Spider(scrapy.Spider):
     name = "Metro-spider"
     allowed_domains = ["metro.ca"]
     start_urls = [
-        'https://www.metro.ca/epicerie-en-ligne/recherche',
+        'https://www.metro.ca/trouver-une-epicerie',
     ]
     
-    def parse(self,response):
-        #return[FormRequest("https://www.metro.ca/stores/setmystore/64",
-        #               formdata = '''{"userConfirmation":"false",
-        #                                       "lang":"fr"}}''',
-        #               callback=self.parse)]
-        #return [FormRequest(url="https://www.metro.ca/stores/setmystore/64",
-        #            formdata={'userConfirmation': 'false', 'lang': 'fr'},
-        #            callback=self.after_post)]
-
-    #handle_httpstatus_list = [415]
-    
-    #def set_store(self, response):
+    def parse(self, response):
         frmdata = {"userConfirmation": "false", "lang": 'fr'}
         url = "https://www.metro.ca/stores/setmystore/64"
-        yield FormRequest(url, callback=self.start_scraping, formdata=frmdata)
-        #data = {
-        #'userConfirmation': 'false',
-        #'lang': 'fr',
-        #}
-        #yield JsonRequest(url='https://www.metro.ca/stores/setmystore/64', data=data)
+        yield FormRequest(url, callback=self.after_select_store, formdata=frmdata)
+
+        
+    def after_select_store(self, response):
+        #if "Error while logging in" in response.body:
+        #    self.logger.error("Login failed!")
+        #else:
+        #    self.logger.error("Login succeeded!")
+        #    item = SampleItem()
+        #    item["quote"] = response.css(".text").extract()
+        #    item["author"] = response.css(".author").extract()
+        #    return item
+        scrapy.Request(url="https://www.metro.ca/epicerie-en-ligne/recherche", callback=self.start_scraping)
+        
         
     def start_scraping(self, response):
         for product in response.css("div.products-tile-list__tile"):
