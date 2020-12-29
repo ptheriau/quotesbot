@@ -8,62 +8,14 @@ import logging
 class Metro_Spider(scrapy.Spider):
     name = "Metro-spider"
     allowed_domains = ["metro.ca"]
-    login_page = 'https://www.metro.ca/trouver-une-epicerie'
     start_urls = [
         'https://www.metro.ca/trouver-une-epicerie',
     ]
     
     def parse(self, response):
-        #frmdata = {"userConfirmation":"false","lang":'fr'}
-        #url = "https://www.metro.ca/stores/setmystore/64"
-        #yield FormRequest(url, callback=self.after_select_store, formdata=frmdata)
-        
-        #yield FormRequest(url="https://www.metro.ca/stores/setmystore/64", method="POST", formdata={'userConfirmation':'false','lang':'fr'})
-        #scrapy.Request(url="https://www.metro.ca/epicerie-en-ligne/recherche", callback=self.start_scraping)
-        logging.debug('testing')
-        pass
-    
-    def init_request(self):
-        logging.debug('init_request')
-        return Request(url=self.login_page, callback=self.login)
-        
-    def login(self, response):
-        logging.debug('logging in...')
-        logging.debug(response)
-        return scrapy.FormRequest.form_response(
-                                         response,
-                                         formdata={'userConfirmation':'false','lang':'fr'},
-                                         callback=self.check_login_response
-                                        )
-
-    def check_login_response(self, response):
-        logging.debug('check_login_response')
-        if "<li class=\"logout\">" in response.body:
-            logging.debug('signed in correctly')
-            self.initialized()
-        else:
-            logging.debug('still not signed in...')
-
-    def parse_item(self, response):
-      console.log('parse_item')
-      i['url'] = response.url
-      logging.debug('response.url:' + response.url)
-      return i
-    
-    
-    
-    
-    
-    def after_select_store(self, response):
-        #if "Error while logging in" in response.body:
-        #    self.logger.error("Login failed!")
-        #else:
-        #    self.logger.error("Login succeeded!")
-        #    item = SampleItem()
-        #    item["quote"] = response.css(".text").extract()
-        #    item["author"] = response.css(".author").extract()
-        #    return item
+        scrapy.FormRequest(url="https://www.metro.ca/stores/setmystore/64", method="POST", formdata={'userConfirmation':'false','lang':'fr'})
         scrapy.Request(url="https://www.metro.ca/epicerie-en-ligne/recherche", callback=self.start_scraping)
+        
         
         
     def start_scraping(self, response):
