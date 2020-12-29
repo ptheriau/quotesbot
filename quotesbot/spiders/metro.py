@@ -90,7 +90,7 @@ class Metro_Spider(scrapy.Spider):
             templegalnotes=""
             templegalnotesselector=product.css("div.tile-product__bottom-section__pricing__legal-notes::text")
             if templegalnotesselector:
-                for temp in product.css("div.tile-product__bottom-section__pricing__legal-notesate *::text").extract():
+                for temp in product.css("div.tile-product__bottom-section__pricing__legal-notes *::text").extract():
                     templegalnotes+=str(temp)
             
             yield {
