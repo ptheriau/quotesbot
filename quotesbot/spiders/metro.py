@@ -7,7 +7,7 @@ class Metro_Spider(scrapy.Spider):
     name = "Metro-spider"
     allowed_domains = ["metro.ca"]
     start_urls = [
-        'https://www.metro.ca/trouver-une-epicerie',
+        'https://www.metro.ca/epicerie-en-ligne/recherche',
     ]
     
     def parse(self, response):
