@@ -53,7 +53,9 @@ class Metro_Spider(scrapy.Spider):
                 if regpriceselector:
                     #en special
                     salepriceunit=product.css("div.pi--main-price::attr(data-main-price)").extract_first().strip()
-                    regpriceunit=product.css("div.pi-regular-price *::text").extract().strip()
+                    for temp in product.css("div.pi-regular-price *::text").extract():
+                        regpriceunit+=str(temp)
+                    
                 else:
                     #prixreg
                     regpriceunit=product.css("div.pi--main-price::attr(data-main-price)").extract_first().strip()
