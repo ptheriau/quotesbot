@@ -22,6 +22,7 @@ class Metro_Spider(scrapy.Spider):
     def start_scraping(self, response):
         logging.info(response)
         for product in response.css("div.products-tile-list__tile"):
+            tempmultiprice='false'
                                
             regpriceperlb=""
             salepriceperlb=""
@@ -59,6 +60,7 @@ class Metro_Spider(scrapy.Spider):
                     salepriceunit=currentprice
                     if 'ou' in multiprice:
                         regpriceunit=multiprice
+                        tempmultiprice='true'
                     else:
                         for temp in product.css("div.pi-regular-price *::text").extract():
                             regpriceunit+=str(temp)       
@@ -87,6 +89,8 @@ class Metro_Spider(scrapy.Spider):
                 for temp in product.css("span.unit-update *::text").extract():
                     estimatedweight+=str(temp)
             
+            templegalnotes=product.css("div.tile-product__bottom-section__pricing__legal-notes::text")
+            
             yield {
                 'brand': tempbrand,
                 'name': product.css("div.pt-title::text").extract_first().strip(),
@@ -94,9 +98,11 @@ class Metro_Spider(scrapy.Spider):
                 'size': tempsize,
                 'regpriceunit': regpriceunit,
                 'salepriceunit': salepriceunit,
+                'multiprice': tempmultiprice,
                 'regpriceperlb': regpriceperlb,
                 'salepriceperlb': salepriceperlb,
                 'estimatedweight': estimatedweight,
+                'legalnotes': templegalnotes,
             }
             #nextpagelinkselector=response.css(".icon--arrow-skinny-right::attr(href)")
             #if nextpagelinkselector:
