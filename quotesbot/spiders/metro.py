@@ -7,14 +7,16 @@ class Metro_Spider(scrapy.Spider):
     name = "Metro-spider"
     allowed_domains = ["metro.ca"]
     start_urls = [
-        'https://www.metro.ca/epicerie-en-ligne/recherche',
+        'https://www.metro.ca/trouver-une-epicerie',
     ]
     
     def parse(self, response):
-        frmdata = {"userConfirmation": "false", "lang": 'fr'}
-        url = "https://www.metro.ca/stores/setmystore/64"
-        yield FormRequest(url, callback=self.after_select_store, formdata=frmdata)
-
+        #frmdata = {"userConfirmation":"false","lang":'fr'}
+        #url = "https://www.metro.ca/stores/setmystore/64"
+        #yield FormRequest(url, callback=self.after_select_store, formdata=frmdata)
+        yield FormRequest(url="https://www.metro.ca/stores/setmystore/64", method="POST", formdata={'userConfirmation':'false','lang':'fr'}, callback=self.data_parse)
+        scrapy.Request(url="https://www.metro.ca/epicerie-en-ligne/recherche", callback=self.start_scraping)
+        
         
     def after_select_store(self, response):
         #if "Error while logging in" in response.body:
