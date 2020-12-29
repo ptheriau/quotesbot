@@ -37,11 +37,11 @@ class Metro_Spider(scrapy.Spider):
 
     def check_login_response(self, response):
         self.log('check_login_response')
-    if "<li class=\"logout\">" in response.body:
-        self.log('signed in correctly')
-        self.initialized()
-    else:
-        self.log('still not signed in...')
+        if "<li class=\"logout\">" in response.body:
+            self.log('signed in correctly')
+            self.initialized()
+        else:
+            self.log('still not signed in...')
 
     def parse_item(self, response):
       console.log('parse_item')
