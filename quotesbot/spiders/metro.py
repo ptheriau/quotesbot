@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
+from scrapy.http import Request
 from scrapy.http import FormRequest
 import re
 
@@ -14,7 +15,7 @@ class Metro_Spider(scrapy.Spider):
         #frmdata = {"userConfirmation":"false","lang":'fr'}
         #url = "https://www.metro.ca/stores/setmystore/64"
         #yield FormRequest(url, callback=self.after_select_store, formdata=frmdata)
-        yield FormRequest(url="https://www.metro.ca/stores/setmystore/64", method="POST", formdata={'userConfirmation':'false','lang':'fr'}, callback=self.data_parse)
+        yield FormRequest(url="https://www.metro.ca/stores/setmystore/64", method="POST", formdata={'userConfirmation':'false','lang':'fr'})
         scrapy.Request(url="https://www.metro.ca/epicerie-en-ligne/recherche", callback=self.start_scraping)
         
         
