@@ -49,13 +49,15 @@ class Metro_Spider(scrapy.Spider):
             salepriceunit=''
             regpriceunit=''
             if regpriceperlb=="" and salepriceperlb=="":
-                specialselector=product.css("div.pi-sale-price .pi-price-promo")
-                if specialselector:
-                    salepriceunit=product.css("div.pi-sale-price .pi-price-promo::text").extract_first().strip()
+                regpriceselector=product.css("div.pi-regular-price")
+                if regpriceselector:
+                    #en special
+                    salepriceunit=product.css("div.pi--main-price::attr(data-main-price)").extract_first().strip()
                     regpriceunit=product.css("div.pi-regular-price .pi-price::text").extract_first().strip()
                 else:
-                    #regpriceunit=product.css("div.pi-sale-price .pi-price::text").extract_first().strip()
+                    #prixreg
                     regpriceunit=product.css("div.pi--main-price::attr(data-main-price)").extract_first().strip()
+                    salepriceunit=''
             
             brandselector=product.css("span.pt-brand::text")
             if brandselector:
