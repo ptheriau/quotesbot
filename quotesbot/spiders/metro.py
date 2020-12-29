@@ -16,11 +16,11 @@ class Metro_Spider(scrapy.Spider):
         yield scrapy.FormRequest(url="https://www.metro.ca/stores/setmystore/64", method="POST", formdata={'userConfirmation':'false','lang':'fr'}, callback=self.store_set)
         
     def store_set(self, response):
-        logging.debug(response)
+        logging.info(response)
         yield scrapy.Request(url="https://www.metro.ca/epicerie-en-ligne/recherche", callback=self.start_scraping)
         
     def start_scraping(self, response):
-        logging.debug(response)
+        logging.info(response)
         for product in response.css("div.products-tile-list__tile"):
                                
             regpriceperlb=""
@@ -46,16 +46,15 @@ class Metro_Spider(scrapy.Spider):
                         tempstring=re.sub('[^\d\.]', '', tempstring)
                         regpriceperlb=str(round(float(tempstring)/2.2046, 2))
                         
-            regpriceunit=""
-            salepriceunit=""
             if regpriceperlb=="" and salepriceperlb=="":
-                promoselector=product.css("div.pi-price-promo")
-                if promoselector:
-                    salepriceunit=product.css("div.pi-sale-price .pi-price::text").extract().strip()
+                specialselector=product.css("div.pi-sale-price .price-promo")
+                if specialselector:
+                    salepriceunit=product.css("div.pi-sale-price .price-promo::text").extract_first().strip()
                     regpriceunit=product.css("div.pi-regular-price .pi-price::text").extract_first().strip()
                 else:
-                    for temp in product.css("span.pi-price *::text").extract():
-                        regpriceunit+=str(temp).strip()
+                    salepriceunit=''
+                    #regpriceunit=product.css("div.pi-sale-price .pi-price::text").extract_first().strip()
+                    regpriceunit=product.css("div.pi--main-price@data-main-price").extract_first().strip()
             
             brandselector=product.css("span.pt-brand::text")
             if brandselector:
