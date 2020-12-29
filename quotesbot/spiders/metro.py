@@ -89,7 +89,7 @@ class Metro_Spider(scrapy.Spider):
                 for temp in product.css("span.unit-update *::text").extract():
                     estimatedweight+=str(temp)
             
-            templegalnotes=product.css("div.tile-product__bottom-section__pricing__legal-notes::text")
+            templegalnotes=product.css("div.tile-product__bottom-section__pricing__legal-notes span::text")
             
             yield {
                 'brand': tempbrand,
