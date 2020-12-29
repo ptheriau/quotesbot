@@ -44,8 +44,7 @@ class Metro_Spider(scrapy.Spider):
                     if "kg" in tempstring:
                         tempstring=tempstring.replace(',', '.')
                         tempstring=re.sub('[^\d\.]', '', tempstring)
-                        #regpriceperlb=str(round(float(tempstring)/2.2046, 2))
-                        regpriceperlb=tempstring
+                        regpriceperlb=str(round(float(tempstring)/2.2046, 2))
                         
             regpriceunit=""
             salepriceunit=""
