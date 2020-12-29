@@ -7,6 +7,7 @@ import re
 class Metro_Spider(scrapy.Spider):
     name = "Metro-spider"
     allowed_domains = ["metro.ca"]
+    login_page = 'https://www.metro.ca/trouver-une-epicerie'
     start_urls = [
         'https://www.metro.ca/trouver-une-epicerie',
     ]
@@ -15,10 +16,43 @@ class Metro_Spider(scrapy.Spider):
         #frmdata = {"userConfirmation":"false","lang":'fr'}
         #url = "https://www.metro.ca/stores/setmystore/64"
         #yield FormRequest(url, callback=self.after_select_store, formdata=frmdata)
-        yield FormRequest(url="https://www.metro.ca/stores/setmystore/64", method="POST", formdata={'userConfirmation':'false','lang':'fr'})
-        scrapy.Request(url="https://www.metro.ca/epicerie-en-ligne/recherche", callback=self.start_scraping)
         
+        #yield FormRequest(url="https://www.metro.ca/stores/setmystore/64", method="POST", formdata={'userConfirmation':'false','lang':'fr'})
+        #scrapy.Request(url="https://www.metro.ca/epicerie-en-ligne/recherche", callback=self.start_scraping)
+        self.log('testing')
+        pass
+    
+    def init_request(self):
+    self.log('init_request')
+    return Request(url=self.login_page, callback=self.login)
         
+    def login(self, response):
+        self.log('logging in...')
+        self.log(response)
+        return scrapy.FormRequest.form_response(
+                                         response,
+                                         formdata={'userConfirmation':'false','lang':'fr'},
+                                         callback=self.check_login_response
+                                        )
+
+    def check_login_response(self, response):
+        self.log('check_login_response')
+    if "<li class=\"logout\">" in response.body:
+        self.log('signed in correctly')
+        self.initialized()
+    else:
+        self.log('still not signed in...')
+
+    def parse_item(self, response):
+      console.log('parse_item')
+      i['url'] = response.url
+      console.log('response.url:' + response.url)
+      return i
+    
+    
+    
+    
+    
     def after_select_store(self, response):
         #if "Error while logging in" in response.body:
         #    self.logger.error("Login failed!")
