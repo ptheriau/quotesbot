@@ -74,7 +74,8 @@ class Metro_Spider(scrapy.Spider):
                         if '/' in regpriceunit:
                             temp=regpriceunit.split('/')
                             #regpriceunit=str(round(float(temp[1])/float(temp[0]), 2))
-                            regpriceunit='%.2f' % float(temp[1])/float(temp[0])
+                            regpriceunit=float(temp[1])/int(temp[0])
+                            regpriceunit='%.2f' % regpriceunit
                 else:
                     #prixreg
                     regpriceunit=currentprice
