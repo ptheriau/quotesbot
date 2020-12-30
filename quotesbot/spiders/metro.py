@@ -54,7 +54,7 @@ class Metro_Spider(scrapy.Spider):
                 currentprice=product.css("div.pi--main-price::attr(data-main-price)").extract_first().strip()
                 regpriceselector=product.css("div.pi-regular-price")
                 multiprice=''
-                for temp in product.css("div.pi-secondary-price .pi-price *::text").extract():
+                for temp in product.css("div.pi-secondary-price .pi-price *::text").extract_first():
                     multiprice+=str(temp)
                 if regpriceselector or 'ou' in multiprice:
                     #en special
@@ -63,7 +63,7 @@ class Metro_Spider(scrapy.Spider):
                         regpriceunit=multiprice
                         tempmultiprice='true'
                     else:
-                        for temp in product.css("div.pi-regular-price *::text").extract_first():
+                        for temp in product.css("div.pi-regular-price *::text").extract():
                             regpriceunit+=str(temp)
                         regpriceunit=regpriceunit.replace('Prix régulier', '')
                 else:
