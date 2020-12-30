@@ -43,8 +43,8 @@ class Metro_Spider(scrapy.Spider):
                 for temp in product.css("div.pi-regular-price *::text").extract():
                     tempstring+=str(temp)
                     if "kg" in tempstring:
-                        #tempstring=tempstring.replace(',', '.')
-                        tempstring.replace(',', '.')
+                        tempstring=tempstring.replace(',', '.')
+                        #tempstring.replace(',', '.')
                         tempstring=re.sub('[^\d\.]', '', tempstring)
                         regpriceperlb=str(round(float(tempstring)/2.2046, 2))
                         
@@ -63,9 +63,9 @@ class Metro_Spider(scrapy.Spider):
                         regpriceunit=multiprice
                         tempmultiprice='true'
                     else:
-                        for temp in product.css("div.pi-regular-price *::text").extract():
+                        for temp in product.css("div.pi-regular-price *::text").extract_first():
                             regpriceunit+=str(temp)
-                        regpriceunit.replace('Prix régulier', '')
+                        regpriceunit=regpriceunit.replace('Prix régulier', '')
                 else:
                     #prixreg
                     regpriceunit=currentprice
