@@ -121,6 +121,8 @@ class Metro_Spider(scrapy.Spider):
                 'legalnotes': ' '.join(templegalnotes.split()),
             }
             #nextpagelinkselector=response.css(".icon--arrow-skinny-right::attr(href)")
-            #if nextpagelinkselector:
-            #    nextpagelink=nextpagelinkselector[0].extract()
-            #    yield scrapy.Request(url=response.urljoin(nextpagelink))
+            #nextpagelinkselector=response.find_elements_by_css_selector("a[aria-label='Suivant']")
+            nextpagelinkselector=response.css('a[aria-label='Suivant']::attr(href)').extract()
+            if nextpagelinkselector:
+                nextpagelink=nextpagelinkselector[0].extract()
+                yield scrapy.Request(url=response.urljoin(nextpagelink))
