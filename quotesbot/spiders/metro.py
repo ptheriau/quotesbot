@@ -65,9 +65,9 @@ class Metro_Spider(scrapy.Spider):
                         for temp in product.css("div.pi-regular-price *::text").extract():
                             regpriceunit+=str(temp)
                         #regpriceunit=regpriceunit.replace('Prix régulier', '')
-                        #20201230 Remove everything but numbers and dot (replace , prior) so no need to drop prix régulier.
+                        #20201230 Remove everything but numbers, dot (replace , prior) and / so no need to drop prix régulier.
                         regpriceunit=regpriceunit.replace(',', '.')
-                        regpriceunit=re.sub('[^\d\.]', '', regpriceunit)
+                        regpriceunit=re.sub('[^\d\.\/]', '', regpriceunit)
                 else:
                     #prixreg
                     regpriceunit=currentprice
