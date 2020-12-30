@@ -64,14 +64,17 @@ class Metro_Spider(scrapy.Spider):
                     else:
                         for temp in product.css("div.pi-regular-price *::text").extract():
                             regpriceunit+=str(temp)
+
+                        #20201230 Remove everything but numbers, dot (replace , prior) and / so no need to drop prix régulier, must remove 'ch.' because of dot.
+                        #regpriceunit=regpriceunit.replace('ch.', '')
                         #regpriceunit=regpriceunit.replace('Prix régulier', '')
-                        #20201230 Remove everything but numbers, dot (replace , prior) and / so no need to drop prix régulier.
                         regpriceunit=regpriceunit.replace(',', '.')
                         regpriceunit=re.sub('[^\d\.\/]', '', regpriceunit)
                         #20201230 Convert 2/5.00 prices
                         if '/' in regpriceunit:
                             temp=regpriceunit.split('/')
-                            regpriceunit=str(round(float(temp[1])/float(temp[0]), 2))
+                            #regpriceunit=str(round(float(temp[1])/float(temp[0]), 2))
+                            regpriceunit='%.2f' % str(float(temp[1])/float(temp[0]))
                 else:
                     #prixreg
                     regpriceunit=currentprice
