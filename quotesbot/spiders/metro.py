@@ -63,7 +63,8 @@ class Metro_Spider(scrapy.Spider):
                         tempmultiprice='true'
                     else:
                         for temp in product.css("div.pi-regular-price *::text").extract():
-                            regpriceunit+=str(temp)       
+                            regpriceunit+=str(temp)
+                        regpriceunit.replace('Prix régulier', '')
                 else:
                     #prixreg
                     regpriceunit=currentprice
@@ -92,19 +93,21 @@ class Metro_Spider(scrapy.Spider):
             if templegalnotesselector:
                 for temp in product.css("div.tile-product__bottom-section__pricing__legal-notes *::text").extract():
                     templegalnotes+=str(temp)
-            
+                    
+            # ' '.join(templegalnotes.split()) espaces, tab, newline et replace par un espace singulier entre les mots.
+            #source: https://stackoverflow.com/questions/8270092/remove-all-whitespace-in-a-string
             yield {
                 'brand': tempbrand,
                 'name': product.css("div.pt-title::text").extract_first().strip(),
                 'link': product.css("a.product-details-link::attr(href)").extract_first(),
                 'size': tempsize,
-                'regpriceunit': regpriceunit,
+                'regpriceunit': ' '.join(regpriceunit.split()),
                 'salepriceunit': salepriceunit,
                 'multiprice': tempmultiprice,
                 'regpriceperlb': regpriceperlb,
                 'salepriceperlb': salepriceperlb,
                 'estimatedweight': estimatedweight,
-                'legalnotes': templegalnotes,
+                'legalnotes': ' '.join(templegalnotes.split()),
             }
             #nextpagelinkselector=response.css(".icon--arrow-skinny-right::attr(href)")
             #if nextpagelinkselector:
