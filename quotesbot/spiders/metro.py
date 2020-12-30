@@ -71,7 +71,7 @@ class Metro_Spider(scrapy.Spider):
                         #20201230 Convert 2/5.00 prices
                         if '/' in regpriceunit:
                             temp=regpriceunit.split('/')
-                            regpriceunit=str(round(float(temp[1])/temp[0], 2))
+                            regpriceunit=str(round(float(temp[1])/float(temp[0]), 2))
                 else:
                     #prixreg
                     regpriceunit=currentprice
