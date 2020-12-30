@@ -38,7 +38,7 @@ class Metro_Spider(scrapy.Spider):
             if regularpriceselector:
                 salepriceperlb=regpriceperlb
                 regpriceperlb=""
-                tempstring=str("")
+                tempstring=""
                 previous=""
                 for temp in product.css("div.pi-regular-price *::text").extract():
                     tempstring+=str(temp)
@@ -48,8 +48,8 @@ class Metro_Spider(scrapy.Spider):
                         #tempstring=re.sub('[^\d\.]', '', tempstring)
                         tempstring=re.sub('[^\d\,]', '', tempstring)
                         tempstring=tempstring.replace(',', '.')
-                        tempstring=float(tempstring)/2.2046
-                        regpriceunit='%.2f' % tempstring
+                        tempfloat=float(tempstring)/2.2046
+                        regpriceunit='%.2f' % tempfloat
                         
             salepriceunit=''
             regpriceunit=''
