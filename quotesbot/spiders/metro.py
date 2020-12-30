@@ -66,7 +66,7 @@ class Metro_Spider(scrapy.Spider):
                             regpriceunit+=str(temp)
 
                         #20201230 Remove everything but numbers, dot (replace , prior) and / so no need to drop prix régulier, must remove 'ch.' because of dot.
-                        #regpriceunit=regpriceunit.replace('ch.', '')
+                        regpriceunit=regpriceunit.replace('ch.', '')
                         #regpriceunit=regpriceunit.replace('Prix régulier', '')
                         regpriceunit=regpriceunit.replace(',', '.')
                         regpriceunit=re.sub('[^\d\.\/]', '', regpriceunit)
