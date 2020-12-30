@@ -43,9 +43,13 @@ class Metro_Spider(scrapy.Spider):
                 for temp in product.css("div.pi-regular-price *::text").extract():
                     tempstring+=str(temp)
                     if "kg" in tempstring:
+                        #20201230 Reverse order to drop env., ch. - only , left should be price.
+                        #tempstring=tempstring.replace(',', '.')
+                        #tempstring=re.sub('[^\d\.]', '', tempstring)
+                        tempstring=re.sub('[^\d\,]', '', tempstring)
                         tempstring=tempstring.replace(',', '.')
-                        tempstring=re.sub('[^\d\.]', '', tempstring)
-                        regpriceperlb=str(round(float(tempstring)/2.2046, 2))
+                        tempstring=float(tempstring)/2.2046
+                        regpriceunit='%.2f' % tempstring
                         
             salepriceunit=''
             regpriceunit=''
@@ -66,10 +70,13 @@ class Metro_Spider(scrapy.Spider):
                             regpriceunit+=str(temp)
 
                     #20201230 Remove everything but numbers, dot (replace , prior) and / so no need to drop prix régulier, must remove 'ch.' because of dot.
-                    regpriceunit=regpriceunit.replace('ch.', '')
+                    #regpriceunit=regpriceunit.replace('ch.', '')
                     #regpriceunit=regpriceunit.replace('Prix régulier', '')
+                    #20201230 Reverse order to drop env., ch. - only , left should be price.
+                    #tempstring=tempstring.replace(',', '.')
+                    #tempstring=re.sub('[^\d\.]', '', tempstring)
+                    regpriceunit=re.sub('[^\d\,\/]', '', regpriceunit)
                     regpriceunit=regpriceunit.replace(',', '.')
-                    regpriceunit=re.sub('[^\d\.\/]', '', regpriceunit)
                     #20201230 Convert 2/5.00 prices
                     if '/' in regpriceunit:
                         temp=regpriceunit.split('/')
